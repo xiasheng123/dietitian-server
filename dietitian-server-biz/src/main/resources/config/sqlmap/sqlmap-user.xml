@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mybatis-3-mapper.dtd定义了该文件的标签，command+B可跳转到定义 -->
+
+<!--Create by fu-->
+<!--@author fu-->
+
+<!--该文件由org.mybatis.spring.SqlSessionFactoryBean负责扫描（在appcontext-db.xml中定义）-->
+
+<!--namespace是将该xml和对应的DAO接口关联起来（sql的id名称将对应接口中的方法名，两者可以相互跳转）-->
+<mapper namespace="com.xiasheng.medical.dietitian.biz.dao.UserDao">
+
+    <!--resultMap用于配置sql返回结果的类型解析，保证结果（数据库表字段）和实体类属性能够正确映射-->
+    <!--property是类中对应的属性名(idea能实时监测，如果该类里面没有该属性，会标红)，column是数据库表中的字段-->
+    <resultMap id="user" type="com.xiasheng.medical.dietitian.biz.entity.UserEntity">
+        <result column="ID" property="id"/>
+        <result column="Phone" property="phone"/>
+    </resultMap>
+
+
+    <sql id="select">
+        SELECT
+        id,
+        phone
+        FROM Dietitian_User
+    </sql>
+
+
+    <!--id的名称就是DAO接口中声明的方法-->
+    <!--parameterType是mybatis的传入参数类型：包括基本数据类型（int,string,long,Date）
+    以及复杂数据类型（类、map）,其中map表示多参传入(一一对应)-->
+    <!--<select id="findAll" parameterType="map" resultMap="student">-->
+        <!--<include refid="select"></include>-->
+    <!--</select>-->
+
+    <!--&lt;!&ndash;#{name}参数值对应DAO接口中@Param(value = "name")的值&ndash;&gt;-->
+    <!--<select id="findByName" parameterType="map" resultMap="student">-->
+        <!--<include refid="select"></include>-->
+        <!--WHERE name=#{name}-->
+    <!--</select>-->
+
+    <select id="loadById" parameterType="map" resultMap="user">
+        <include refid="select"></include>
+        WHERE id=#{id}
+    </select>
+
+    <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
+        insert into Dietitian_User
+        (`Phone`)
+        VALUES
+        (#{entity.phone})
+    </insert>
+    <!--<update id="updateStudent" parameterType="map">-->
+        <!--UPDATE Student-->
+        <!--SET name=#{name},age=#{age}-->
+        <!--WHERE id= #{id}-->
+    <!--</update>-->
+
+    <!--<update id="removeStudent" parameterType="map">-->
+        <!--DELETE FROM Student-->
+        <!--WHERE id= #{id}-->
+    <!--</update>-->
+
+</mapper>

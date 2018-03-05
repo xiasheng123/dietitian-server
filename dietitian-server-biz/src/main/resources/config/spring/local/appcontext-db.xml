@@ -49,7 +49,7 @@
 
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.dianping.merchant.demo.biz.dao"/>
+        <property name="basePackage" value="com.xiasheng.medical.dietitian.biz.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
 
