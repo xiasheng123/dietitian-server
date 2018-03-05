@@ -1,22 +1,16 @@
-package com.xiasheng.medical.dietitian.biz.entity;
+package com.xiasheng.medical.dietitian.api.dto;
 
 import lombok.Data;
 
 /**
- * Created by fu on 2018/3/5.
+ * Created by fu on 2018/3/6.
  */
 @Data
-public class DishFoodEntity {
-
-    private int id;
-
-    private int foodId;
+public class DishFoodDTO {
 
     private String foodName;
 
     private String amountDesc;
-
-    private int recipeId;
 
     /**
      * 1：早餐
@@ -25,4 +19,7 @@ public class DishFoodEntity {
      * 4：加餐
      */
     private int mealType;
+
+    private String mealName;
+
 }

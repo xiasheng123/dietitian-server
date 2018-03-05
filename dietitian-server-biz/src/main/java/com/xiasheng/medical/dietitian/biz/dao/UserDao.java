@@ -11,4 +11,6 @@ public interface UserDao {
     void insert(@Param("entity") UserEntity entity);
 
     UserEntity loadById(@Param("id") int id);
+
+    UserEntity findByPhone(@Param("phone") String phone);
 }

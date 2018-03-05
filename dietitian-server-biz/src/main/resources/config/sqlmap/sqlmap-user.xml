@@ -15,13 +15,25 @@
     <resultMap id="user" type="com.xiasheng.medical.dietitian.biz.entity.UserEntity">
         <result column="ID" property="id"/>
         <result column="Phone" property="phone"/>
+        <result column="Password" property="password"/>
+        <result column="Sex" property="sex"/>
+        <result column="RealName" property="realName"/>
+        <result column="Birthday" property="birthday"/>
+        <result column="AppKey" property="appKey"/>
+        <result column="NickName" property="nickName"/>
     </resultMap>
 
 
     <sql id="select">
         SELECT
         id,
-        phone
+        phone,
+        Password,
+        Sex,
+        RealName,
+        Birthday,
+        AppKey,
+        NickName
         FROM Dietitian_User
     </sql>
 
@@ -42,6 +54,12 @@
     <select id="loadById" parameterType="map" resultMap="user">
         <include refid="select"></include>
         WHERE id=#{id}
+    </select>
+
+    <select id="findByPhone" parameterType="map" resultMap="user">
+        <include refid="select"></include>
+        WHERE phone=#{phone}
+        limit 1
     </select>
 
     <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
