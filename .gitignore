@@ -1,0 +1,15 @@
+.svn/
+.idea/
+.settings/
+target/
+out/
+.classpath
+.project
+.mymetadata
+*.iml
+rebel.xml
+*.ipr
+*.iws
+.DS_Store
+*.versionsBackup
+*.lock

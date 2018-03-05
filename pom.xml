@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.xiasheng.medical</groupId>
+    <artifactId>dietitian-server</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>dietitian-server-api</module>
+        <module>dietitian-server-biz</module>
+        <module>dietitian-server-web</module>
+    </modules>
+
+    <properties>
+        <spring.version>3.2.9.RELEASE</spring.version>
+    </properties>
+
+</project>
