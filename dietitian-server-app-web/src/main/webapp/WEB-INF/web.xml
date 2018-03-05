@@ -1,0 +1,45 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!--Java Web的启动过程:
+  1)利用context-param创建ServletContext；
+  2)创建listener（依赖于ServletContext）;
+  3)filter；
+  4)servlet。-->
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:config/spring/local/appcontext-*.xml</param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <!-- Handles all requests into the application -->
+  <!--不在servlet中配置xml路径，只在context-param中配置，找不到配置文件-->
+  <!--记得整理context-param和servlet中的init-param的区别-->
+
+  <servlet>
+    <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>
+        classpath*:config/spring/local/appcontext-*.xml
+      </param-value>
+    </init-param>
+
+    <!--在web应用启动的时候指定了servlet被加载的顺序-->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+</web-app>

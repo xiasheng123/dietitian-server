@@ -9,7 +9,7 @@
 
     <!--Spring要找到component-scan这个元素，需要正确配置命名空间context，及其对于的schemaLacation（即xsd文件：xml结构定义）-->
     <!--把base包改成宽泛一点，可以扫描到其它@Service、@Component的bean-->
-    <context:component-scan base-package="com.dianping.merchant.demo.app.web"/>
+    <context:component-scan base-package="com.xiasheng.medical.dietitian.web"/>
 
 
 </beans>

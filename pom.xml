@@ -11,7 +11,7 @@
     <modules>
         <module>dietitian-server-api</module>
         <module>dietitian-server-biz</module>
-        <module>dietitian-server-web</module>
+        <module>dietitian-server-app-web</module>
     </modules>
 
     <properties>

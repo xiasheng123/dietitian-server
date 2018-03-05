@@ -20,6 +20,7 @@ public class RecipeController extends BaseController {
     @RequestMapping(value = "/getrecipe")
     @ResponseBody
     public WebResult getRecipe(@RequestParam(value = "appKey") String appKey) {
-        return null;
+
+        return WebResult.success("heheh");
     }
 }

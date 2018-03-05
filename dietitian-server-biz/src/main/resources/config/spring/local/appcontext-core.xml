@@ -8,7 +8,7 @@
     <!--这个文件用来配置component-scan、JMS等-->
 
     <!--Spring要找到component-scan这个元素，需要正确配置命名空间context，及其对于的schemaLacation（即xsd文件：xml结构定义）-->
-    <context:component-scan base-package="com.dianping.merchant.demo.biz"/>
+    <context:component-scan base-package="com.xiasheng.medical.dietitian.biz"/>
 
 
 </beans>
