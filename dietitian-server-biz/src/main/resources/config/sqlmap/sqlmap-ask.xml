@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiasheng.medical.dietitian.biz.dao.AskDao">
+
+    <resultMap id="ask" type="com.xiasheng.medical.dietitian.biz.entity.AskEntity">
+        <result column="ID" property="id"/>
+    </resultMap>
+
+
+    <sql id="select">
+        SELECT
+        id,
+        phone,
+        Password,
+        Sex,
+        RealName,
+        Birthday,
+        AppKey,
+        NickName
+        FROM Dietitian_User
+    </sql>
+
+    <select id="loadById" parameterType="map" resultMap="ask">
+        <include refid="select"></include>
+        WHERE id=#{id}
+    </select>
+
+
+    <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
+        insert into Dietitian_User
+        (`Phone`)
+        VALUES
+        (#{entity.phone})
+    </insert>
+
+</mapper>

@@ -13,4 +13,8 @@ public interface UserDao {
     UserEntity loadById(@Param("id") int id);
 
     UserEntity findByPhone(@Param("phone") String phone);
+
+    UserEntity findByAppKey(@Param("appKey") String appKey);
+
+    void updateUser(@Param("entity") UserEntity entity);
 }

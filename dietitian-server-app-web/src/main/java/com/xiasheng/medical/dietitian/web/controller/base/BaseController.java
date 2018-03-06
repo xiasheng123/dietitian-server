@@ -6,5 +6,6 @@ package com.xiasheng.medical.dietitian.web.controller.base;
 
 public abstract class BaseController {
 
+    //String getAppKey(HttpRe)
 
 }

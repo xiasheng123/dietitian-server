@@ -14,6 +14,12 @@ public class RecipeDTO {
 
     private int calorieContent;
 
-    private List<DishFoodDTO> dishes;
+    private List<DishFoodDTO> breakfastDishes;
+
+    private List<DishFoodDTO> lunchDishes;
+
+    private List<DishFoodDTO> dinnerDishes;
+
+    private List<DishFoodDTO> extraDishes;
 
 }

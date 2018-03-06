@@ -53,12 +53,21 @@
 
     <select id="loadById" parameterType="map" resultMap="user">
         <include refid="select"></include>
-        WHERE id=#{id}
+        WHERE ID=#{id}
+        AND Status = 1
     </select>
 
     <select id="findByPhone" parameterType="map" resultMap="user">
         <include refid="select"></include>
-        WHERE phone=#{phone}
+        WHERE Phone=#{phone}
+        AND Status = 1
+        limit 1
+    </select>
+
+    <select id="findByAppKey" parameterType="map" resultMap="user">
+        <include refid="select"></include>
+        WHERE AppKey=#{appKey}
+        AND Status = 1
         limit 1
     </select>
 
@@ -68,15 +77,15 @@
         VALUES
         (#{entity.phone})
     </insert>
-    <!--<update id="updateStudent" parameterType="map">-->
-        <!--UPDATE Student-->
-        <!--SET name=#{name},age=#{age}-->
-        <!--WHERE id= #{id}-->
-    <!--</update>-->
 
-    <!--<update id="removeStudent" parameterType="map">-->
-        <!--DELETE FROM Student-->
-        <!--WHERE id= #{id}-->
-    <!--</update>-->
+    <update id="updateUser" parameterType="com.xiasheng.medical.dietitian.biz.entity.UserEntity">
+        UPDATE Dietitian_User
+        SET
+        `NickName` =#{entity.nickName},
+        `RealName` =#{entity.realName},
+        `Birthday` =#{entity.birthday}
+        `Sex` =#{entity.sex}
+        WHERE  ID=#{entity.id}
+    </update>
 
 </mapper>

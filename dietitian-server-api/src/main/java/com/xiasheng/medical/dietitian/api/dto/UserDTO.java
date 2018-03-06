@@ -21,6 +21,8 @@ public class UserDTO {
      */
     private int sex;
 
+    private String sexStr;
+
     private String realName;
 
     private Date birthday;

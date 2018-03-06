@@ -16,7 +16,7 @@ public interface UserService {
 
     String getAppKey(int userId);
 
-    UserDTO getUserAppKey(String appKey);
+    UserDTO getUserByAppKey(String appKey);
 
     IResponse login(String phone, String password);
 }
