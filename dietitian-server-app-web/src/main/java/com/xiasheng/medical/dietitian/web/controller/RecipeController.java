@@ -36,7 +36,7 @@ public class RecipeController extends BaseController {
     @ResponseBody
     public WebResult getRecipe(@RequestParam(value = "appKey") String appKey) {
         //TODO
-        UserDTO userDTO = userService.getUserByAppKey(appKey);
+        UserDTO userDTO = getUserDTO(appKey);
         if (userDTO == null) {
             WebResult.fail("请重新登录！");
         }

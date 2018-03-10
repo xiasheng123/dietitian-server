@@ -10,6 +10,8 @@ import java.util.Date;
 @Data
 public class PushNewsDTO {
 
+    private int id;
+
     private String title;
 
     private int clickCount;
@@ -21,4 +23,9 @@ public class PushNewsDTO {
     private String contentAbstract;
 
     private String detailUrl;
+
+    private String content;
+
+    private int editStatus;
+
 }

@@ -10,6 +10,8 @@ import java.util.Date;
 @Data
 public class ReportKidneyDTO {
 
+    private int userId;
+
     /**
      * 肌酐含量
      */

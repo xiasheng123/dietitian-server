@@ -1,22 +1,22 @@
-package com.xiasheng.medical.dietitian.biz.entity;
+package com.xiasheng.medical.dietitian.api.dto;
 
 import lombok.Data;
 
 import java.util.Date;
 
 /**
- * Created by fu on 2018/3/5.
+ * Created by fu on 2018/3/7.
  */
 @Data
-public class AskPostEntity {
-
-    private int id;
+public class AskPostDTO {
 
     private int askId;
 
     private int userId;
 
     private int userType;
+
+    private String userName;
 
     private int rank;
 
@@ -28,11 +28,6 @@ public class AskPostEntity {
      */
     private int postType;
 
-    /**
-     * 0：审核未通过
-     * 1：审核通过（默认）
-     */
-    private int censorStatus;
-
     private Date addTime;
+
 }

@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
         UserDTO userDTO = new UserDTO();
         userDTO.setPhone(entity.getPhone());
         userDTO.setAppKey(entity.getAppKey());
+        userDTO.setNickName(entity.getNickName());
         return IResponse.success(userDTO);
     }
 

@@ -73,9 +73,9 @@
 
     <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
         insert into Dietitian_User
-        (`Phone`)
+        (`AppKey`,`Phone`,`Password`,`NickName`,`AddTime`,`UpdateTime`)
         VALUES
-        (#{entity.phone})
+        (#{entity.appKey},#{entity.phone},#{entity.password},#{entity.nickName},now(),now())
     </insert>
 
     <update id="updateUser" parameterType="com.xiasheng.medical.dietitian.biz.entity.UserEntity">

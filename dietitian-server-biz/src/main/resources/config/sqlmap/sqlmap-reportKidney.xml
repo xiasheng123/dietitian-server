@@ -4,6 +4,8 @@
 
     <resultMap id="reportKidney" type="com.xiasheng.medical.dietitian.biz.entity.ReportKidneyEntity">
         <result column="ID" property="id"/>
+        <result column="ID" property="id"/>
+        <result column="ID" property="id"/>
     </resultMap>
 
 

@@ -1,5 +1,6 @@
 package com.xiasheng.medical.dietitian.api.service;
 
+import com.xiasheng.medical.dietitian.api.constants.NewsEditStatusEnum;
 import com.xiasheng.medical.dietitian.api.dto.PushNewsDTO;
 import com.xiasheng.medical.dietitian.api.utils.IResponse;
 
@@ -10,8 +11,12 @@ import java.util.List;
  */
 public interface PushNewsService {
 
-    List<PushNewsDTO> getNews(int pageNo, int pageSize);
+    List<PushNewsDTO> getNewsList(int pageNo, int pageSize, List<NewsEditStatusEnum> editStatusEnumList);
 
     IResponse addNews(PushNewsDTO pushNewsDTO);
+
+    PushNewsDTO getNewsDetail(int pushNewsId);
+
+    void addClickCount(int pushNewsId);
 
 }
