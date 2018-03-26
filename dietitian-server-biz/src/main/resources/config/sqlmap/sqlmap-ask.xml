@@ -4,33 +4,138 @@
 
     <resultMap id="ask" type="com.xiasheng.medical.dietitian.biz.entity.AskEntity">
         <result column="ID" property="id"/>
+        <result column="Title" property="title"/>
+        <result column="SolvedStatus" property="solvedStatus"/>
+        <result column="LikeCount" property="likeCount"/>
+        <result column="AskDate" property="askDate"/>
+        <result column="UserId" property="userId"/>
+        <result column="CensorStatus" property="censorStatus"/>
     </resultMap>
 
+    <resultMap id="askPost" type="com.xiasheng.medical.dietitian.biz.entity.AskPostEntity">
+        <result column="ID" property="id"/>
+        <result column="AskId" property="askId"/>
+        <result column="UserId" property="userId"/>
+        <result column="UserType" property="userType"/>
+        <result column="Rank" property="rank"/>
+        <result column="Content" property="content"/>
+        <result column="PostType" property="postType"/>
+        <result column="CensorStatus" property="censorStatus"/>
+        <result column="AddTime" property="addTime"/>
+    </resultMap>
 
     <sql id="select">
         SELECT
         id,
-        phone,
-        Password,
-        Sex,
-        RealName,
-        Birthday,
-        AppKey,
-        NickName
-        FROM Dietitian_User
+        Title,
+        SolvedStatus,
+        LikeCount,
+        AskDate,
+        UserId,
+        CensorStatus
+        FROM Dietitian_Ask
+    </sql>
+
+    <sql id="selectPost">
+        SELECT
+        id,
+        AskId,
+        UserId,
+        UserType,
+        Rank,
+        Content,
+        PostType,
+        CensorStatus,
+        AddTime
+        FROM Dietitian_AskPost
     </sql>
 
     <select id="loadById" parameterType="map" resultMap="ask">
         <include refid="select"></include>
         WHERE id=#{id}
+        AND Status = 1
+    </select>
+
+    <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
+        insert into Dietitian_Ask
+        (`Title`,`AskDate`,`UserId`,`AddTime`,`UpdateTime`)
+        VALUES
+        (#{entity.title},now(),#{entity.userId},now(),now())
+    </insert>
+
+    <insert id="insertAskPost" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
+        insert into Dietitian_AskPost
+        (`AskId`,`UserId`,`UserType`,`Rank`,`Content`,`PostType`,`AddTime`,`UpdateTime`)
+        VALUES
+        (#{entity.askId},#{entity.userId},#{entity.userType},#{entity.rank},#{entity.content},#{entity.postType},now(),now())
+    </insert>
+
+
+    <select id="findByUserId" parameterType="map" resultMap="ask">
+        <include refid="select"></include>
+        WHERE UserId=#{userId}
+        AND Status = 1
+    </select>
+
+    <select id="findByIds" parameterType="map" resultMap="ask">
+        <include refid="select"></include>
+        WHERE ID IN
+        <foreach item="item" collection="ids" separator="," open="(" close=")" index="">
+            #{item}
+        </foreach>
+        AND Status = 1
+    </select>
+
+    <select id="findByFuzzyTitle" parameterType="map" resultMap="ask">
+        <include refid="select"></include>
+        WHERE Title LIKE #{keyword}
+        AND Status = 1
     </select>
 
 
-    <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
-        insert into Dietitian_User
-        (`Phone`)
-        VALUES
-        (#{entity.phone})
-    </insert>
+    <select id="getRankCount" parameterType="map" resultType="Integer">
+        SELECT COUNT(*)
+        FROM Dietitian_AskPost
+        WHERE AskId=#{askId}
+        AND Status = 1
+    </select>
+
+    <select id="getAskPost" parameterType="map" resultMap="ask">
+        <include refid="selectPost"></include>
+        WHERE AskId=#{askId}
+        AND Status = 1
+        AND CensorStatus IN
+        <foreach item="item" collection="censorStatusList" separator="," open="(" close=")" index="">
+            #{item}
+        </foreach>
+        ORDER BY AddTime DESC
+        limit #{start},#{size}
+    </select>
+
+    <select id="findByUserIdAndType" parameterType="map" resultMap="askPost">
+        <include refid="selectPost"></include>
+        WHERE UserId=#{userId}
+        AND UserType = #{userType}
+        AND Status = 1
+    </select>
+
+    <update id="updateLikeCount">
+        UPDATE Dietitian_Ask
+        <set>
+            LikeCount=#{likeCount}
+        </set>
+        WHERE  ID=#{id}
+        AND Status = 1
+    </update>
+
+    <update id="updateSolvedStatus"  parameterType="map">
+        UPDATE Dietitian_Ask
+        <set>
+            SolvedStatus=#{solvedStatus}
+        </set>
+        WHERE  ID=#{id}
+        AND Status = 1
+    </update>
+
 
 </mapper>

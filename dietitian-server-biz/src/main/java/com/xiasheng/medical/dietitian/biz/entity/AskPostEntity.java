@@ -20,7 +20,7 @@ public class AskPostEntity {
 
     private int rank;
 
-    private String Content;
+    private String content;
 
     /**
      * 1：提问

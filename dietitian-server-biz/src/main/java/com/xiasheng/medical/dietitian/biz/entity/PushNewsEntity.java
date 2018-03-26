@@ -30,4 +30,5 @@ public class PushNewsEntity {
 
     private String detailUrl;
 
+    private String content;
 }

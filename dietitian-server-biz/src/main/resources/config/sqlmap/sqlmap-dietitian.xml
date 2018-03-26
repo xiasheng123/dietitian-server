@@ -4,33 +4,36 @@
 
     <resultMap id="dietitian" type="com.xiasheng.medical.dietitian.biz.entity.DietitianEntity">
         <result column="ID" property="id"/>
+        <result column="RealName" property="realName"/>
+        <result column="Phone" property="phone"/>
+        <result column="Password" property="password"/>
+        <result column="Title" property="title"/>
+        <result column="HospitalId" property="hospitalId"/>
     </resultMap>
-
 
     <sql id="select">
         SELECT
         id,
-        phone,
-        Password,
-        Sex,
         RealName,
-        Birthday,
-        AppKey,
-        NickName
-        FROM Dietitian_User
+        Password,
+        Phone,
+        Title,
+        HospitalId
+        FROM Dietitian_Dietitian
     </sql>
 
     <select id="loadById" parameterType="map" resultMap="dietitian">
         <include refid="select"></include>
         WHERE id=#{id}
+        AND Status = 1
     </select>
 
 
     <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
-        insert into Dietitian_User
-        (`Phone`)
+        insert into Dietitian_Dietitian
+        (`RealName`,`Password`,`Phone`,`Title`,`HospitalId`,`AddTime`,`UpdateTime`)
         VALUES
-        (#{entity.phone})
+        (#{entity.realName},#{entity.password},#{entity.phone},#{entity.title},#{entity.hospitalId},now(),now())
     </insert>
 
 </mapper>

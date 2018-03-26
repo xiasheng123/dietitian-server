@@ -4,33 +4,41 @@
 
     <resultMap id="adGallery" type="com.xiasheng.medical.dietitian.biz.entity.AdGalleryEntity">
         <result column="ID" property="id"/>
+        <result column="ImageUrl" property="imageUrl"/>
+        <result column="DetailUrl" property="detailUrl"/>
+        <result column="Sort" property="sort"/>
+        <result column="ActivateStatus" property="activateStatus"/>
     </resultMap>
-
 
     <sql id="select">
         SELECT
         id,
-        phone,
-        Password,
-        Sex,
-        RealName,
-        Birthday,
-        AppKey,
-        NickName
-        FROM Dietitian_User
+        ImageUrl,
+        DetailUrl,
+        Sort,
+        ActivateStatus
+        FROM Dietitian_AdGallery
     </sql>
 
     <select id="loadById" parameterType="map" resultMap="adGallery">
         <include refid="select"></include>
         WHERE id=#{id}
+        AND Status = 1
+    </select>
+
+    <select id="findAll" parameterType="map" resultMap="adGallery">
+        <include refid="select"></include>
+        WHERE ActivateStatus = 1
+        AND Status = 1
+        ORDER BY Sort DESC
     </select>
 
 
     <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
-        insert into Dietitian_User
-        (`Phone`)
+        insert into Dietitian_AdGallery
+        (`ImageUrl`,`DetailUrl`,`Sort`,`ActivateStatus`,`AddTime`,`UpdateTime`)
         VALUES
-        (#{entity.phone})
+        (#{entity.imageUrl},#{entity.detailUrl},#{entity.sort},#{entity.activateStatus},now(),now())
     </insert>
 
 </mapper>

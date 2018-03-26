@@ -4,33 +4,101 @@
 
     <resultMap id="moment" type="com.xiasheng.medical.dietitian.biz.entity.MomentEntity">
         <result column="ID" property="id"/>
+        <result column="UserId" property="userId"/>
+        <result column="CategoryId" property="categoryId"/>
+        <result column="Content" property="content"/>
+        <result column="CensorStatus" property="censorStatus"/>
     </resultMap>
 
+    <resultMap id="momentComment" type="com.xiasheng.medical.dietitian.biz.entity.MomentCommentEntity">
+        <result column="ID" property="id"/>
+        <result column="DietitianId" property="dietitianId"/>
+        <result column="Content" property="content"/>
+        <result column="MomentId" property="momentId"/>
+    </resultMap>
+
+    <resultMap id="momentPic" type="com.xiasheng.medical.dietitian.biz.entity.MomentPicMappingEntity">
+        <result column="ID" property="id"/>
+        <result column="ImageUrl" property="imageUrl"/>
+        <result column="ThumbnailUrl" property="thumbnailUrl"/>
+        <result column="MomentId" property="momentId"/>
+        <result column="Sort" property="sort"/>
+    </resultMap>
 
     <sql id="select">
         SELECT
         id,
-        phone,
-        Password,
-        Sex,
-        RealName,
-        Birthday,
-        AppKey,
-        NickName
-        FROM Dietitian_User
+        UserId,
+        CategoryId,
+        Content,
+        CensorStatus
+        FROM Dietitian_Moment
     </sql>
+
+    <sql id="selectComment">
+        SELECT
+        id,
+        DietitianId,
+        Content,
+        MomentId
+        FROM Dietitian_MomentComment
+    </sql>
+
+    <sql id="selectPic">
+        SELECT
+        id,
+        ImageUrl,
+        ThumbnailUrl,
+        Sort,
+        MomentId
+        FROM Dietitian_MomentPicMapping
+    </sql>
+
+    <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
+        insert into Dietitian_Moment
+        (`UserId`,`CategoryId`,`Content`,`CensorStatus`,`AddTime`,`UpdateTime`)
+        VALUES
+        (#{entity.userId},#{entity.categoryId},#{entity.content},#{entity.censorStatus},now(),now())
+    </insert>
+
+    <insert id="insertPic" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
+        insert into Dietitian_MomentComment
+        (`DietitianId`,`Content`,`MomentId`,`AddTime`,`UpdateTime`)
+        VALUES
+        (#{entity.dietitianId},#{entity.content},#{entity.momentId},now(),now())
+    </insert>
+
+    <insert id="insertComment" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
+        insert into Dietitian_MomentPicMapping
+        (`ImageUrl`,`ThumbnailUrl`,`Sort`,`MomentId`,`AddTime`,`UpdateTime`)
+        VALUES
+        (#{entity.imageUrl},#{entity.thumbnailUrl},#{entity.sort},#{entity.momentId},now(),now())
+    </insert>
 
     <select id="loadById" parameterType="map" resultMap="moment">
         <include refid="select"></include>
         WHERE id=#{id}
+        AND Status = 1
+    </select>
+
+    <select id="findByUserId" parameterType="map" resultMap="moment">
+        <include refid="select"></include>
+        WHERE UserId=#{userId}
+        AND Status = 1
+    </select>
+
+    <select id="findCommentsByMomentId" parameterType="map" resultMap="momentComment">
+        <include refid="selectComment"></include>
+        WHERE MomentId=#{momentId}
+        AND Status = 1
+    </select>
+
+    <select id="findPicsByMomentId" parameterType="map" resultMap="momentPic">
+        <include refid="selectPic"></include>
+        WHERE MomentId=#{momentId}
+        AND Status = 1
     </select>
 
 
-    <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
-        insert into Dietitian_User
-        (`Phone`)
-        VALUES
-        (#{entity.phone})
-    </insert>
 
 </mapper>

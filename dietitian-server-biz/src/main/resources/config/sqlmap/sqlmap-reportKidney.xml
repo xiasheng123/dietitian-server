@@ -4,44 +4,50 @@
 
     <resultMap id="reportKidney" type="com.xiasheng.medical.dietitian.biz.entity.ReportKidneyEntity">
         <result column="ID" property="id"/>
-        <result column="ID" property="id"/>
-        <result column="ID" property="id"/>
+        <result column="UserId" property="userId"/>
+        <result column="Creatinine" property="creatinine"/>
+        <result column="BloodProtein" property="bloodProtein"/>
+        <result column="ReportTime" property="reportTime"/>
     </resultMap>
-
 
     <sql id="select">
         SELECT
         id,
-        phone,
-        Password,
-        Sex,
-        RealName,
-        Birthday,
-        AppKey,
-        NickName
-        FROM Dietitian_User
+        UserId,
+        Creatinine,
+        BloodProtein,
+        ReportTime
+        FROM Dietitian_Report_Kidney
     </sql>
 
     <select id="loadById" parameterType="map" resultMap="reportKidney">
         <include refid="select"></include>
         WHERE id=#{id}
+        AND Status = 1
     </select>
 
 
     <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
-        insert into Dietitian_User
-        (`Phone`)
+        insert into Dietitian_Report_Kidney
+        (`UserId`,`Creatinine`,`BloodProtein`,`ReportTime`,`AddTime`,`UpdateTime`)
         VALUES
-        (#{entity.phone})
+        (#{entity.userId},#{entity.creatinine},#{entity.bloodProtein},#{entity.UserId},now(),now(),now())
     </insert>
 
     <select id="findLatestReportByUserId" parameterType="map" resultMap="reportKidney">
         <include refid="select"></include>
         WHERE UserID=#{userId}
+        AND Status = 1
         ORDER BY ReportTime DESC
         limit 1
     </select>
 
+    <select id="findByUserId" parameterType="map" resultMap="reportKidney">
+        <include refid="select"></include>
+        WHERE UserID=#{userId}
+        AND Status = 1
+        ORDER BY ReportTime DESC
+    </select>
 
 
 </mapper>

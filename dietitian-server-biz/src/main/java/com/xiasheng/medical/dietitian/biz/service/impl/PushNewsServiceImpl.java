@@ -71,7 +71,7 @@ public class PushNewsServiceImpl implements PushNewsService {
         pushNewsEntity.setImageUrl(pushNewsDTO.getImageUrl());
 
         pushNewsDao.insert(pushNewsEntity);
-        pushNewsDao.insertContent(pushNewsEntity.getId(), content);
+        //pushNewsDao.insertContent(pushNewsEntity.getId(), content);
         return IResponse.success("done");
     }
 
@@ -82,12 +82,11 @@ public class PushNewsServiceImpl implements PushNewsService {
         if (pushNewsEntity == null) {
             return null;
         }
-        String content = pushNewsDao.loadContent(pushNewsId);
         pushNewsDTO.setTitle(pushNewsEntity.getTitle());
         pushNewsDTO.setNewsDate(pushNewsEntity.getNewsDate());
         pushNewsDTO.setEditStatus(pushNewsEntity.getEditStatus());
         pushNewsDTO.setClickCount(pushNewsEntity.getClickCount());
-        pushNewsDTO.setContent(content);
+        pushNewsDTO.setContent(pushNewsEntity.getContent());
         return pushNewsDTO;
     }
 

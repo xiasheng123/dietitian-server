@@ -4,20 +4,36 @@
 
     <resultMap id="recipe" type="com.xiasheng.medical.dietitian.biz.entity.RecipeEntity">
         <result column="ID" property="id"/>
+        <result column="ProteinContent" property="proteinContent"/>
+        <result column="CalorieContent" property="calorieContent"/>
     </resultMap>
 
+    <resultMap id="dishFood" type="com.xiasheng.medical.dietitian.biz.entity.DishFoodEntity">
+        <result column="ID" property="id"/>
+        <result column="FoodId" property="foodId"/>
+        <result column="FoodName" property="foodName"/>
+        <result column="AmountDesc" property="amountDesc"/>
+        <result column="RecipeId" property="recipeId"/>
+        <result column="MealType" property="mealType"/>
+    </resultMap>
 
     <sql id="select">
         SELECT
         id,
-        phone,
-        Password,
-        Sex,
-        RealName,
-        Birthday,
-        AppKey,
-        NickName
-        FROM Dietitian_User
+        ProteinContent,
+        CalorieContent
+        FROM Dietitian_Recipe
+    </sql>
+
+    <sql id="selectDishFood">
+        SELECT
+        id,
+        FoodId,
+        FoodName,
+        AmountDesc,
+        RecipeId,
+        MealType
+        FROM Dietitian_DishFood
     </sql>
 
     <select id="loadById" parameterType="map" resultMap="recipe">
@@ -27,11 +43,11 @@
     </select>
 
 
-    <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
-        insert into Dietitian_User
-        (`Phone`)
+    <insert id="insertRecipe" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
+        insert into Dietitian_Recipe
+        (`ProteinContent`,`CalorieContent`,`AddTime`,`UpdateTime`)
         VALUES
-        (#{entity.phone})
+        (#{entity.proteinContent},#{entity.calorieContent},now(),now())
     </insert>
 
     <select id="findRecipeInRange" parameterType="map" resultMap="recipe">
@@ -42,5 +58,27 @@
         AND CalorieContent &lt;=#{cEnd}
         AND Status = 1
     </select>
+
+    <select id="findDishFoodByRecipeId" parameterType="map" resultMap="dishFood">
+        <include refid="selectDishFood"></include>
+        WHERE RecipeId=#{recipeId}
+        AND Status = 1
+    </select>
+
+    <insert id="insertDishFood" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
+        insert into Dietitian_DishFood
+        (`FoodName`,`AmountDesc`,`RecipeId`,`MealType`,`AddTime`,`UpdateTime`)
+        VALUES
+        (#{entity.foodName},#{entity.amountDesc},#{entity.recipeId},#{entity.mealType},now(),now())
+    </insert>
+
+    <update id="delDishFood"  parameterType="map">
+        UPDATE Dietitian_DishFood
+        <set>
+            Status=0
+        </set>
+        WHERE  ID=#{id}
+        AND Status = 1
+    </update>
 
 </mapper>

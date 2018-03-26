@@ -4,33 +4,70 @@
 
     <resultMap id="pushNews" type="com.xiasheng.medical.dietitian.biz.entity.PushNewsEntity">
         <result column="ID" property="id"/>
+        <result column="Title" property="title"/>
+        <result column="ClickCount" property="clickCount"/>
+        <result column="ImageUrl" property="imageUrl"/>
+        <result column="NewsDate" property="newsDate"/>
+        <result column="EditStatus" property="editStatus"/>
+        <result column="ContentAbstract" property="contentAbstract"/>
+        <result column="DetailUrl" property="detailUrl"/>
+        <result column="Content" property="content"/>
     </resultMap>
-
 
     <sql id="select">
         SELECT
         id,
-        phone,
-        Password,
-        Sex,
-        RealName,
-        Birthday,
-        AppKey,
-        NickName
-        FROM Dietitian_User
+        Title,
+        ClickCount,
+        ImageUrl,
+        NewsDate,
+        EditStatus,
+        ContentAbstract,
+        Content.
+        DetailUrl
+        FROM Dietitian_PushNews
     </sql>
 
     <select id="loadById" parameterType="map" resultMap="pushNews">
         <include refid="select"></include>
         WHERE id=#{id}
+        AND Status = 1
     </select>
 
 
     <insert id="insert" parameterType="map"  useGeneratedKeys="true" keyProperty="entity.id" >
-        insert into Dietitian_User
-        (`Phone`)
+        insert into Dietitian_PushNews
+        (`Title`,`ClickCount`,`ImageUrl`,`NewsDate`,`EditStatus`,`ContentAbstract`,`DetailUrl`,`Content`,`AddTime`,`UpdateTime`)
         VALUES
-        (#{entity.phone})
+        (#{entity.title},#{entity.clickCount},#{entity.imageUrl},#{entity.newsDate},#{entity.editStatus},
+        #{entity.contentAbstract},#{entity.detailUrl},#{entity.content},now(),now())
     </insert>
+
+    <update id="updateNews"  parameterType="map">
+        UPDATE Dietitian_PushNews
+        <set>
+            Title = #{entity.title},
+            ClickCount = #{entity.clickCount},
+            ImageUrl = #{entity.imageUrl},
+            NewsDate = #{entity.newsDate},
+            EditStatus = #{entity.editStatus},
+            ContentAbstract = #{entity.contentAbstract},
+            Content = #{entity.content},
+            DetailUrl = #{entity.detailUrl}
+        </set>
+        WHERE  ID=#{entity.id}
+    </update>
+
+    <select id="findNews" parameterType="map" resultMap="pushNews">
+        <include refid="select"></include>
+        WHERE EditStatus IN
+        <foreach item="item" collection="editStatusList" separator="," open="(" close=")" index="">
+            #{item}
+        </foreach>
+        AND Status = 1
+        ORDER BY NewsDate DESC
+        limit #{start}, #{size}
+    </select>
+
 
 </mapper>
